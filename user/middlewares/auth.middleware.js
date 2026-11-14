@@ -20,7 +20,7 @@ const authuser = async (req, res, next) => {
         next();
 
     } catch (error) {
-        console.log("JWT ERROR:", error.message);
+        
 
         if (
             error.name === "TokenExpiredError" ||

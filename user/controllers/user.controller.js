@@ -85,4 +85,16 @@ const logoutuser=async(req,res)=>{
    }
 }
 
-module.exports={registeruser,loginuser,logoutuser}
+
+const profile=async(req,res)=>{
+    try {
+        return res.status(200).json({
+            message:"Profile fetched"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:"Server error"
+        })
+    }
+}
+module.exports={registeruser,loginuser,logoutuser,profile}

@@ -61,6 +61,8 @@ const loginuser=async(req,res)=>{
                 message:"Invalid credentials"
             })
         }
+        const token= jwt.sign({id:userexist._id},process.env.JWT_SECRET,{expiresIn:'1h'})
+        res.cookie("token",token)
         return res.status(200).json({
             message:"Login success"
         })

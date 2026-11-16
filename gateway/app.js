@@ -3,7 +3,7 @@ const expressproxy=require("express-http-proxy")
 const app=express()
 
 app.use("/user",expressproxy("http://localhost:3001"))
-app.use("/captain",expressproxy("hhtp://localhost:3002"))
+app.use("/captain",expressproxy("http://localhost:3002"))
 
 
 app.listen(3000,()=>{

@@ -6,6 +6,6 @@ const connectDb=require("./db/db")
 app.use(express.json())
 app.use(cookieparser())
 const captainRoutes=require("../captain/routes/captain.routes")
-app.use("/captain",captainRoutes)
+app.use("/",captainRoutes)
 connectDb()
 module.exports=app;

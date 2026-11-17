@@ -88,8 +88,16 @@ const logoutcaptain=async(req,res)=>{
 
 const profile=async(req,res)=>{
     try {
+        const id=req.captain.id;
+        const captain=await captainModel.findById(id)
         return res.status(200).json({
-            message:"Profile fetched"
+            message:"Profile fetched",
+            profiledata:{
+                id:id,
+                name:captain.captainname,
+                isavailable:captain.isAvailable
+
+            }
         })
     } catch (error) {
         return res.status(500).json({
@@ -97,4 +105,30 @@ const profile=async(req,res)=>{
         })
     }
 }
-module.exports={registercaptain,logincaptain,logoutcaptain,profile}
+
+const toggleavailability=async(req,res)=>{
+try{
+    const id=req.captain.id
+    
+    if(!id){
+        return res.status(400).json({
+            message:"Captain id is required"
+        })
+    }
+    const captain=await captainModel.findById(id)
+    if(!captain){
+        return res.status(404).json({
+            message:"Captain doesnt exist"
+        })
+    }
+    captain.isAvailable=!captain.isAvailable;
+    captain.save();
+    return res.status(200).json({
+        message:"Captain is toogled"
+    })
+}
+catch(err){
+    console.log(err)
+}
+}
+module.exports={registercaptain,logincaptain,logoutcaptain,profile,toggleavailability}

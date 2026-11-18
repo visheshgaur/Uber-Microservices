@@ -21,7 +21,7 @@ const registeruser=async(req,res)=>{
         const newuser=await userModel.create({
             username,email,password:hashedpassword
         });
-        const token= jwt.sign({id:newuser._id},process.env.JWT_SECRET,{expiresIn:'1h'})
+        const token= jwt.sign({id:newuser._id,role:"user"},process.env.JWT_SECRET,{expiresIn:'1h'})
         res.cookie("token",token)
         return res.status(201).json({
             message:"user registered sucessfully !!",
@@ -61,7 +61,7 @@ const loginuser=async(req,res)=>{
                 message:"Invalid credentials"
             })
         }
-        const token= jwt.sign({id:userexist._id},process.env.JWT_SECRET,{expiresIn:'1h'})
+        const token= jwt.sign({id:userexist._id,role:"user"},process.env.JWT_SECRET,{expiresIn:'1h'})
         res.cookie("token",token)
         return res.status(200).json({
             message:"Login success"
@@ -89,7 +89,8 @@ const logoutuser=async(req,res)=>{
 const profile=async(req,res)=>{
     try {
         return res.status(200).json({
-            message:"Profile fetched"
+            message:"Profile fetched",
+            user:req.user.id
         })
     } catch (error) {
         return res.status(500).json({

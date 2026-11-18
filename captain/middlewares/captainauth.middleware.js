@@ -14,7 +14,11 @@ const authcaptain = async (req, res, next) => {
             token,
             process.env.JWT_SECRET
         );
-
+        if(decoded.role!="captain"){
+            return res.status(401).json({
+                message:"user not allowed !!"
+            })
+        }
         req.captain = decoded;
 
         next();

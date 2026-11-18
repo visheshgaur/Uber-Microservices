@@ -21,7 +21,7 @@ const registercaptain=async(req,res)=>{
         const newcaptain=await captainModel.create({
             captainname,email,password:hashedpassword
         });
-        const token= jwt.sign({id:newcaptain._id},process.env.JWT_SECRET,{expiresIn:'1h'})
+        const token= jwt.sign({id:newcaptain._id,role:"captain"},process.env.JWT_SECRET,{expiresIn:'1h'})
         res.cookie("token",token)
         return res.status(201).json({
             message:"captain registered sucessfully !!",
@@ -61,7 +61,7 @@ const logincaptain=async(req,res)=>{
                 message:"Invalid credentials"
             })
         }
-        const token= jwt.sign({id:captainexist._id},process.env.JWT_SECRET,{expiresIn:'1h'})
+        const token= jwt.sign({id:captainexist._id,role:"captain"},process.env.JWT_SECRET,{expiresIn:'1h'})
         res.cookie("token",token)
         return res.status(200).json({
             message:"Login success"

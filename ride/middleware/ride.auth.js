@@ -18,8 +18,9 @@ const authUser=async(req,res,next)=>{
                 }
             }
         );
-
+        
         req.user = response.data.user;
+        
         next();
 
     } catch (error) {

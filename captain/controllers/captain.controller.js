@@ -1,7 +1,7 @@
 const captainModel=require("../models/captain.model")
 const bcrypt=require("bcrypt")
 const jwt=require("jsonwebtoken")
-
+const {subscribeToQueue}=require("../services/rabbitmq")
 
 const registercaptain=async(req,res)=>{
     try{
@@ -131,4 +131,7 @@ catch(err){
     console.log(err)
 }
 }
+subscribeToQueue("new-ride",(data)=>{
+    console.log(data)
+})
 module.exports={registercaptain,logincaptain,logoutcaptain,profile,toggleavailability}

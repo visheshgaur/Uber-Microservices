@@ -1,4 +1,5 @@
 const rideModel=require("../models/ride.model")
+const {publishToQueue}=require("../services/rabbitmq")
 const createride=async(req,res)=>{
     try{
         const {pickup,destination}=req.body;
@@ -9,6 +10,7 @@ const createride=async(req,res)=>{
             pickup:pickup,
             destination:destination
         })
+        publishToQueue("new-ride",JSON.stringify(newRide))
         return res.status(201).json({
             message:"Ride created sucess",
            rideDetails:{

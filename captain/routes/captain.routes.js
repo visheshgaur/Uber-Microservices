@@ -7,4 +7,5 @@ router.post("/login",captainController.logincaptain)
 router.post("/logout",captainController.logoutcaptain)
 router.get("/profile",authcaptain,captainController.profile)  
 router.patch("/toggle",authcaptain,captainController.toggleavailability)
+router.get("/new-ride",authcaptain,captainController.waitForNewRide)
 module.exports=router;

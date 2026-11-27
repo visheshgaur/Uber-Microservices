@@ -134,4 +134,17 @@ catch(err){
 subscribeToQueue("new-ride",(data)=>{
     console.log(data)
 })
-module.exports={registercaptain,logincaptain,logoutcaptain,profile,toggleavailability}
+
+const pendingRequests=[];
+const waitForNewRide=async(req,res)=>{
+    req.setTimeout(30000,()=>{
+        res.status(204).end()
+    })
+    pendingRequests.push(res)
+    subscribeToQueue("new-ride",(data)=>{
+        const rideData=JSON.parse(data)
+        pendingRequests.forEach(res=>{res.json({rideData})})
+        pendingRequests.length=0
+    })
+}
+module.exports={registercaptain,logincaptain,logoutcaptain,profile,toggleavailability,waitForNewRide}
